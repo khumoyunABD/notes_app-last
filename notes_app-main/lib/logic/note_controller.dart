@@ -73,4 +73,19 @@ class NoteController extends GetxController {
 
     loadNotes();
   }
+
+  Future<void> editNote(
+      String id, String title, File image, String description) async {
+    final db = await _getDatabase();
+
+    final data = {
+      'title': title,
+      'image': image,
+      'description': description,
+    };
+
+    await db.update('client_notes', data, where: 'id = ?', whereArgs: [id]);
+
+    loadNotes();
+  }
 }

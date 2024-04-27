@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes/logic/note_controller.dart';
 import 'package:notes/models/note.dart';
+import 'package:notes/screens/edit_note.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
   const NoteDetailsScreen({
@@ -21,7 +22,18 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
     Get.find<NoteController>().deleteNote(id);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Success'),
+        content: Text('Note has been deleted'),
+      ),
+    );
+    Navigator.of(context).pop();
+  }
+
+  void editNote(String id) async {
+    Get.find<NoteController>().editNote(
+        id, widget.note.title, widget.note.image, widget.note.description);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Note has been updated successfully'),
       ),
     );
     Navigator.of(context).pop();
@@ -38,6 +50,12 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
               deleteNote(widget.note.id);
             },
             icon: const Icon(Icons.delete),
+          ),
+          IconButton(
+            onPressed: () {
+              Get.to(EditNoteScreen(note: widget.note));
+            },
+            icon: const Icon(Icons.edit),
           ),
         ],
       ),
