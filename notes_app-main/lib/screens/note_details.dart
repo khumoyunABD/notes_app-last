@@ -28,16 +28,16 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
     Navigator.of(context).pop();
   }
 
-  void editNote(String id) async {
-    Get.find<NoteController>().editNote(
-        id, widget.note.title, widget.note.image, widget.note.description);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Note has been updated successfully'),
-      ),
-    );
-    Navigator.of(context).pop();
-  }
+  // void editNote(String id) async {
+  //   Get.find<NoteController>().editNote(
+  //       id, widget.note.title, widget.note.image, widget.note.description);
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(
+  //       content: Text('Note has been updated successfully'),
+  //     ),
+  //   );
+  //   Navigator.of(context).pop();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,9 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
           ),
           IconButton(
             onPressed: () {
-              Get.to(EditNoteScreen(note: widget.note));
+              Get.to(() => EditNoteScreen(
+                    note: widget.note,
+                  ));
             },
             icon: const Icon(Icons.edit),
           ),

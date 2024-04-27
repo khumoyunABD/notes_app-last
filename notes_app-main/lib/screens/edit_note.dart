@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes/logic/note_controller.dart';
 import 'package:notes/models/note.dart';
+import 'package:notes/screens/notes_screen.dart';
 import 'package:notes/widgets/image_picker.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -19,8 +20,9 @@ class EditNoteScreen extends StatefulWidget {
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
+  late final _titleController = TextEditingController(text: widget.note.title);
+  late final _descriptionController =
+      TextEditingController(text: widget.note.description);
 
   File? _selectedImage;
 
@@ -38,26 +40,21 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         ),
       );
     }
-    if (_selectedImage == null) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Добавьте картинку!'),
-          duration: Duration(seconds: 3),
-        ),
-      );
-    }
 
-    Get.find<NoteController>()
-        .editNote(id, enteredTitle, _selectedImage!, enteredDescription);
+    Get.find<NoteController>().editNote(
+      id,
+      enteredTitle,
+      _selectedImage ?? widget.note.image,
+      enteredDescription,
+    );
     Get.find<NoteController>().loadNotes();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Note has been updated successfully'),
+        content: Text('Заметка была успешно обновлена!'),
       ),
     );
 
-    Navigator.of(context).pop();
+    Get.to(() => const NotesScreen());
   }
 
   @override

@@ -57,12 +57,15 @@ class NoteController extends GetxController {
 
     final db = await _getDatabase();
 
-    db.insert('client_notes', {
-      'id': newNote.id,
-      'title': newNote.title,
-      'image': newNote.image.path,
-      'description': newNote.description,
-    });
+    db.insert(
+        'client_notes',
+        {
+          'id': newNote.id,
+          'title': newNote.title,
+          'image': newNote.image.path,
+          'description': newNote.description,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace);
     loadNotes();
   }
 
@@ -76,12 +79,22 @@ class NoteController extends GetxController {
 
   Future<void> editNote(
       String id, String title, File image, String description) async {
+    //copied from noteAdd()
+    final appDir = await syspaths.getApplicationDocumentsDirectory();
+    final fileName = path.basename(image.path);
+    final copiedImage = await image.copy('${appDir.path}/$fileName');
+    final newNote = Note(
+      title: title,
+      image: copiedImage,
+      description: description,
+    );
+
     final db = await _getDatabase();
 
     final data = {
-      'title': title,
-      'image': image,
-      'description': description,
+      'title': newNote.title,
+      'image': newNote.image.path,
+      'description': newNote.description,
     };
 
     await db.update('client_notes', data, where: 'id = ?', whereArgs: [id]);
