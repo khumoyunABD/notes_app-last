@@ -69,7 +69,7 @@ class NoteController extends GetxController {
   Future<void> deleteNote(String id) async {
     final db = await _getDatabase();
 
-    await db.delete('client_notes', where: '$id = ?', whereArgs: [id]);
+    await db.delete('client_notes', where: 'id = ?', whereArgs: [id]);
 
     loadNotes();
   }
