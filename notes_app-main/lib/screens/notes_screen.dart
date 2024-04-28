@@ -15,19 +15,19 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   void initState() {
     super.initState();
-
     Get.find<NoteController>().loadNotes();
   }
 
   @override
   Widget build(BuildContext context) {
-    final userNotes = Get.find<NoteController>();
+    final notes = Get.find<NoteController>();
 
-    final userNotes1 = GetBuilder<NoteController>(
-        builder: (controller) => NotesList(notes: userNotes.notes));
+    final userNotes = GetBuilder<NoteController>(
+        builder: (controller) => NotesList(notes: notes.notes));
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Заметки'),
       ),
       floatingActionButton: Padding(
@@ -54,7 +54,7 @@ class _NotesScreenState extends State<NotesScreen> {
         ),
       ),
       body: Center(
-        child: userNotes1,
+        child: userNotes,
       ),
     );
   }
