@@ -82,14 +82,14 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               decoration: const InputDecoration(labelText: 'Заголовок'),
               controller: _titleController,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 20),
             TextField(
               controller: _descriptionController,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               maxLines: null,
               decoration: InputDecoration(
@@ -105,8 +105,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 label: const Text(
                   'Текст',
                 ),
-                labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground),
+                labelStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.onSurface),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
             ),

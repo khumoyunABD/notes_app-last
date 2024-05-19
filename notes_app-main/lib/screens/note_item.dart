@@ -1,9 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:notes/logic/note_controller.dart';
 import 'package:notes/models/note.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class NoteItem extends StatelessWidget {
+class NoteItem extends StatefulWidget {
   const NoteItem({
     super.key,
     required this.myNote,
@@ -12,6 +14,21 @@ class NoteItem extends StatelessWidget {
 
   final Note myNote;
   final void Function(Note note) onSelectNote;
+
+  @override
+  State<NoteItem> createState() => _NoteItemState();
+}
+
+class _NoteItemState extends State<NoteItem> {
+  //delete function
+  void deleteNote(String id) async {
+    Get.find<NoteController>().deleteNote(id);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Note has been deleted'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +41,9 @@ class NoteItem extends StatelessWidget {
         animType: AnimType.rightSlide,
         title: 'Хотите удалить заметку?',
         desc: 'Точно хотите удалить заметку?',
-        btnCancelOnPress: () {},
+        btnCancelOnPress: () {
+          deleteNote(widget.myNote.id);
+        },
         btnOkOnPress: () {},
       ).show();
     }
@@ -36,7 +55,7 @@ class NoteItem extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            onSelectNote(myNote);
+            widget.onSelectNote(widget.myNote);
           },
           onLongPress: () {
             deleteDialog();
@@ -45,7 +64,7 @@ class NoteItem extends StatelessWidget {
             children: [
               FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
-                image: FileImage(myNote.image),
+                image: FileImage(widget.myNote.image),
                 fit: BoxFit.cover,
                 height: 100,
                 width: double.infinity,
@@ -58,14 +77,14 @@ class NoteItem extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      myNote.title,
+                      widget.myNote.title,
                       style: const TextStyle(color: Colors.amber),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      myNote.description,
+                      widget.myNote.description,
                       style: const TextStyle(color: Colors.grey),
                       maxLines: 3,
                       overflow: TextOverflow.clip,

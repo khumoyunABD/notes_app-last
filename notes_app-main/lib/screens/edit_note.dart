@@ -95,14 +95,14 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               ),
               controller: _titleController,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 20),
             TextField(
               controller: _descriptionController,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               maxLines: null,
               decoration: InputDecoration(

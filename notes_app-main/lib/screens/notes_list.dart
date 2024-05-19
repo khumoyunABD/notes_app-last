@@ -23,7 +23,7 @@ class NotesList extends StatelessWidget {
         child: Text(
           'Нет заметок!',
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
         ),
       );
